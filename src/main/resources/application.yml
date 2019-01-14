@@ -1,0 +1,121 @@
+server:
+  port: 8889
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /shiro
+
+
+## SpringBoot配置文件，使用yml格式的配置文件
+
+## 配置数据源
+spring:
+  # 解决页面中文乱码问题
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+#  mvc:
+#    static-path-pattern: /static/**
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+    static-locations: classpath:/resources/,classpath:/static/,classpath:/****/
+
+  # freemarker视图模型
+  freemarker:
+    request-context-attribute: req  #req访问request
+    suffix: .ftl  #后缀名
+    content-type: text/html
+    enabled: true
+    cache: false #缓存配置
+    template-loader-path: classpath:/templates/ #模板加载路径 按需配置
+    check-template-location: true
+    charset: UTF-8 #编码格式
+    settings:
+      number_format: '0.##'   #数字格式化，无小数点
+  datasource:
+   # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # mysql新版连接
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mysql://127.0.0.1:3306/springboot?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    # 说明： 新版驱动url默认地址为127.0.0.1:3306，所以访问本机mysql数据库地址可以用 /// 表示
+    url: jdbc:mysql:///springboot?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: admin
+    # druid配置
+    druid:
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙log4j2， 'stat'表示使用监控过滤器
+      filters: stat,wall,log4j2
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 1
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-open-prepared-statements: 20
+      pool-prepared-statements: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+# JPA配置
+  jpa:
+    # hibernate相关配置
+    hibernate:
+      # 配置级联等级, update : 加载hibernate自动更新数据库结构
+      ddl-auto: update
+    # 配置数据库的类型
+    database: MYSQL
+    show-sql: true
+    open-in-view: true # 解决使用lazy加载时session失效的问题
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        show_sql: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
+  ## 配置redis数据库连接
+  redis:
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+    host: 192.168.0.106
+    port : 6379
+    timeout: 5000ms # 连接超时时间（毫秒），不能设置为0，时间太短连接不上会报错
+    password: admin
+    database: 0 #默认索引为0的数据库
+
+
+## mybatis配置
+mybatis:
+  mapper-locations: classpath*:com/qiuzq/**/mapper/*.xml #扫描配置;对应mapper映射xml文件的所在路径
+  type-aliases-package: com.qiuzq.model # 别名配置;对应的model路径
+
+
+
+## pageHelper分页插件
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+
+## 日志配置
+#logging:
+#  config: classpath:log4j2.xml
+#  level:
+#    com.qiuzq.mapper: DEBUG
