@@ -66,7 +66,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("******  执行preHandle写入请求日志...  ******");
+        log.info("LoggerInterceptor.preHandle");
         // 创建日志实体
         LoggerModel loggerModel = new LoggerModel();
         /*
@@ -115,7 +115,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        log.info("******  执行afterCompletion将日志保存到数据库...  ******");
+        log.info("LoggerInterceptor.afterCompletion");
         // 请求的错误代码
         int status = response.getStatus();
         // 当前时间
@@ -133,6 +133,6 @@ public class LoggerInterceptor implements HandlerInterceptor {
         // 设置返回值
         loggerModel.setReturnData(JSON.toJSONString(request.getAttribute(LoggerUtils.LOGGER_RETURN), SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue));
         // 执行将日志写入数据库
-        loggerService.save(loggerModel);
+//        loggerService.save(loggerModel);
     }
 }

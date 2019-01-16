@@ -9,7 +9,9 @@ import com.example.demo.util.IPUtils;
 import com.example.demo.util.JSONUtils;
 import com.example.demo.util.ShiroUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,23 @@ public class LogAspect {
 
     @Autowired
     private LoggerRepository loggerRepository;
+
+    @Pointcut("@annotation(com.example.demo.annotation.Log)")
+    public void logPointCut() {
+
+    }
+
+    @Around("logPointCut()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        long beginTime = System.currentTimeMillis();
+        // 执行方法
+        Object result = point.proceed();
+        // 执行时长(毫秒)
+        long time = System.currentTimeMillis() - beginTime;
+        //异步保存日志
+        saveLog(point, time);
+        return result;
+    }
 
 
     void saveLog(ProceedingJoinPoint joinPoint, long time) throws InterruptedException {
