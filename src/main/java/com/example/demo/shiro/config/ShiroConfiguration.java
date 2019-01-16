@@ -1,7 +1,9 @@
 package com.example.demo.shiro.config;
 
 import com.example.demo.shiro.realm.MyShiroRealm;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -20,6 +22,7 @@ import java.util.Map;
  * description 这里要配置的是ShiroConfig类，Apache Shiro 核心通过 Filter 来实现，就好像SpringMvc 通过DispachServlet 来主控制一样。 既然是使用 Filter 一般也就能猜到，是通过URL规则来进行过滤和权限校验，所以我们需要定义一系列关于URL的规则和访问权限。
  */
 @Configuration
+@Slf4j
 public class ShiroConfiguration {
 
     @Bean
@@ -52,6 +55,8 @@ public class ShiroConfiguration {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //将Realm注入到SecurityManager中
         securityManager.setRealm(myShiroRealm());
+        // 注入缓存
+        securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 
@@ -85,6 +90,14 @@ public class ShiroConfiguration {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
+    }
+
+    @Bean
+    public EhCacheManager cacheManager() {
+        log.info("ShiroConfiguration.cacheManager");
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
+        return cacheManager;
     }
 
 

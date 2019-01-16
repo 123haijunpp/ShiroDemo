@@ -50,7 +50,7 @@ public class LoginController {
         modelAndView.addObject("msg", msg);
         modelAndView.setViewName("login");
         // 将返回值写入到请求对象中
-        request.setAttribute(LoggerUtils.LOGGER_RETURN, obj);
+//        request.setAttribute(LoggerUtils.LOGGER_RETURN, obj);
         // 此方法不处理登录成功,由shiro进行处理.
         return modelAndView;
     }

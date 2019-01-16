@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class LoggerModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String clientIp;
 
@@ -36,7 +37,7 @@ public class LoggerModel implements Serializable {
 
     private String sessionId;
 
-    private Date time;
+    private Integer time;
 
     private String returnTime;
 
@@ -47,4 +48,18 @@ public class LoggerModel implements Serializable {
     private String paramData;
 
     private String returnData;
+
+    private String username;
+
+
+    /**
+     * 注解上的描述
+     */
+    private String operation;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date gmtCreate;
 }

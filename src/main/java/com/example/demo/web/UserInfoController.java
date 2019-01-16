@@ -22,7 +22,6 @@ public class UserInfoController {
      */
     @RequestMapping("/userList")
     @RequiresPermissions("userInfo:view")
-    @ExceptionHandler(UnauthorizedException.class)
     public String userInfo() {
         return "userInfo";
     }
