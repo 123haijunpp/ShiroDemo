@@ -18,14 +18,14 @@ public class WebLogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-
     /**
-     * @PointCut ： 声明切入点表达式
+     * '@PointCut : 声明切入点表达式'
      * 定义一个方法, 用于声明切入点表达式. 一般地, 该方法中再不需要添入其他的代码.
      * 使用 @Pointcut 来声明切入点表达式.
      * 后面的其他通知直接使用方法名来引用当前的切入点表达式
+     * 最后括号里的两个..代表所有参数
      */
-    @Pointcut("execution( * com.example.demo.web.*.*(..))") // 最后括号里的两个..代表所有参数
+    @Pointcut("execution( * com.example.demo.web.*.*(..))")
     public void logPointCut() {
 
     }
@@ -33,8 +33,8 @@ public class WebLogAspect {
     /**
      * '@Before 前置通知，在方法执行前执行'
      *
-     * @param joinPoint
-     * @throws Throwable
+     * @param joinPoint 连接点
+     * @throws Throwable 异常抛出
      */
     @Before("logPointCut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
@@ -75,10 +75,10 @@ public class WebLogAspect {
     @Around("logPointCut()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
-        Object ob = pjp.proceed();// ob 为方法的返回值
+        // ob 为方法的返回值
+        Object ob = pjp.proceed();
         logger.info("耗时 : " + (System.currentTimeMillis() - startTime));
         return ob;
     }
-
 
 }

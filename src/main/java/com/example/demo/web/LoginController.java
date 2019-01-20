@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,4 +55,10 @@ public class LoginController {
         // 此方法不处理登录成功,由shiro进行处理.
         return modelAndView;
     }
+
+    @GetMapping("/logout")
+    String logout() {
+        return "logout";
+    }
+
 }

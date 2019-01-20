@@ -17,6 +17,14 @@
     <properties>
         <java.version>1.8</java.version>
         <fastjson.version>1.2.51</fastjson.version>
+        <durid.version>1.1.10</durid.version>
+        <lombok.version>1.18.4</lombok.version>
+        <nekohtml.version>1.9.22</nekohtml.version>
+        <shiro.spring>1.4.0</shiro.spring>
+        <commons-lang3.version>3.6</commons-lang3.version>
+        <net.sf.ehcache.version>2.10.4</net.sf.ehcache.version>
+        <net.sf.ehcache.core.version>2.4.5</net.sf.ehcache.core.version>
+        <kaptcha.version>2.3</kaptcha.version>
     </properties>
 
     <dependencies>
@@ -40,7 +48,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -50,43 +57,60 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <version>${durid.version}</version>
         </dependency>
         <!-- 简化实体开发的工具包 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- 校验HTML -->
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
-            <version>1.9.22</version>
+            <version>${nekohtml.version}</version>
         </dependency>
         <!-- shiro-spring -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.4.0</version>
+            <version>${shiro.spring}</version>
         </dependency>
         <!--commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.6</version>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <!--开启 cache 缓存-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <!-- shiro ehcache -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>1.4.0</version>
+            <version>${shiro.spring}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>ehcache-core</artifactId>
+                    <groupId>net.sf.ehcache</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>2.10.4</version>
+            <version>${net.sf.ehcache.version}</version>
+        </dependency>
+        <!-- ehcache2.5以后，CacheManager使用了Singleton，这样在创建多个CacheManager时就会产生上述错误。 -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${net.sf.ehcache.core.version}</version>
         </dependency>
         <!--
            包含支持UI模版（Velocity，FreeMarker，JasperReports），
@@ -104,6 +128,14 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+        <!-- Google的Kaptcha框架。 -->
+        <dependency>
+            <groupId>kaptcha</groupId>
+            <artifactId>com.google.code.kaptcha/kaptcha</artifactId>
+            <version>${kaptcha.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/kaptcha-2.3.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
