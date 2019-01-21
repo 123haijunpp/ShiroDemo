@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache name="es">
 
-    <diskStore path="D:\Work\tempDirectory"/>
+    <diskStore path="java.io.tmpdir"/>
 
     <!--
        name:缓存名称。
@@ -30,6 +30,7 @@
             overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
     />
 
 

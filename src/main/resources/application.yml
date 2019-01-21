@@ -4,6 +4,8 @@ server:
     uri-encoding: UTF-8
   servlet:
     context-path: /shiro
+    session:
+      timeout: 1800m
 
 
 ## SpringBoot配置文件，使用yml格式的配置文件
