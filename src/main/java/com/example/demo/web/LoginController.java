@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.annotation.Log;
 import com.example.demo.util.LoggerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -24,11 +25,13 @@ import java.util.Map;
 @Slf4j
 public class LoginController {
 
+    @Log("跳转首页")
     @RequestMapping({"/", "/index"})
     public String index() {
         return "index";
     }
 
+    @Log("登录")
     @RequestMapping("/login")
     ModelAndView login(HttpServletRequest request, ModelAndView modelAndView) throws Exception {
         log.info("LoginController.login");
