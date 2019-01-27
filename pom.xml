@@ -24,6 +24,7 @@
         <commons-lang3.version>3.6</commons-lang3.version>
         <net.sf.ehcache.version>2.10.4</net.sf.ehcache.version>
         <net.sf.ehcache.core.version>2.4.5</net.sf.ehcache.core.version>
+        <shiro-redis.version>3.1.0</shiro-redis.version>
         <kaptcha.version>2.3</kaptcha.version>
     </properties>
 
@@ -84,33 +85,17 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-        <!--开启 cache 缓存-->
+        <!-- shiro-redis -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>${shiro-redis.version}</version>
         </dependency>
-        <!-- shiro ehcache -->
+        <!-- shiro-freemarker-tags -->
         <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.spring}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ehcache-core</artifactId>
-                    <groupId>net.sf.ehcache</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>${net.sf.ehcache.version}</version>
-        </dependency>
-        <!-- ehcache2.5以后，CacheManager使用了Singleton，这样在创建多个CacheManager时就会产生上述错误。 -->
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-            <version>${net.sf.ehcache.core.version}</version>
+            <groupId>net.mingsoft</groupId>
+            <artifactId>shiro-freemarker-tags</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!--
            包含支持UI模版（Velocity，FreeMarker，JasperReports），

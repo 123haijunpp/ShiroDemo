@@ -59,6 +59,7 @@ public class LoginController {
         return modelAndView;
     }
 
+    @Log("退出")
     @GetMapping("/logout")
     String logout() {
         return "logout";

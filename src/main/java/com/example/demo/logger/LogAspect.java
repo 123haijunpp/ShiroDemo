@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -48,8 +49,7 @@ public class LogAspect {
         return result;
     }
 
-
-    void saveLog(ProceedingJoinPoint joinPoint, long time) throws InterruptedException {
+    private void saveLog(ProceedingJoinPoint joinPoint, long time) throws InterruptedException {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
@@ -73,6 +73,9 @@ public class LogAspect {
         }
         // 获取request
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+        // 获取response
+//        HttpServletResponse response = HttpContextUtils.getHttpServletResponse();
+//        loggerModel.setHttpStatusCode(response.getStatus() + "");
         // 设置IP地址
         loggerModel.setClientIp(IPUtils.getIpAddr(request));
         // 用户名
